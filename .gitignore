@@ -1,1 +1,2 @@
-src/out/薬効分類.csv
+src/out/therapeutic_category_of_drug_*.csv
+src/tmp/*
