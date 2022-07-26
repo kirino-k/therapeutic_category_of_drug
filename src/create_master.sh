@@ -10,7 +10,6 @@ curl https://www.kegg.jp/brite/jp08301 |
   cat - <(cat ${DIR_SRC}/additional.js) |
   node |
   sed -E 's/^<b>([0-9]{1})(.*)<\/b>(,[0-9]{2})(.*)(,[0-9]{3})(.*)(,[0-9]{4})(.*)$/\1,\2\3,\4\5,\6\7,\8/' |
-  sed -E 's/；.*$//' |
   tr -d ' ' >> ${DIR_OUT}/output.csv
 
 cat ${DIR_OUT}/output.csv |
