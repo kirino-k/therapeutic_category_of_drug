@@ -1,4 +1,4 @@
-# 日本の薬効分類
+# 日本の医療用医薬品の薬効分類マスター
 
 2022-07-26
 
@@ -42,10 +42,7 @@ https://www.soumu.go.jp/toukei_toukatsu/index/seido/syouhin/2index.htm
 ソースコードを実行するためには以下の環境が必須である。
 
 - Linux shell (bash)
-    - curl 
-    - sed 
-    - tr
-    - nkf
+    - curl, sed, tr, nkf
 
 - Nodejs
 
