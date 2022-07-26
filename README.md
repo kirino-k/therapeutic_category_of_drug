@@ -1,4 +1,4 @@
-# 日本の医療用医薬品の薬効分類マスター
+# 日本の医療用医薬品の薬効分類・分類名対応表
 
 2022-07-26
 
@@ -28,7 +28,7 @@ https://www.soumu.go.jp/toukei_toukatsu/index/seido/syouhin/2index.htm
 
 現在の薬効分類番号と分類名の対応表が必要な場合には、本リポジトリの[成果物ページ](https://github.com/kirino-k/therapeutic_category_of_drug/blob/main/src/out/output.csv)をコピー＆ペースト可能である。
 
-また分類の改定など情報の再取得・再加工が必要な場合も想定されるため、対応表作成の手順を以下に示すとともに、そのソースコードと実行環境の情報を併せて提供する。
+また分類の改定などといった、情報の再取得・再加工が必要な状況も想定されるため、対応表作成の手順を以下に示すとともに、対応表作成に用いたソースコードとその実行環境の情報を併せて提供する。
 
 
 ## 対応表の作成方法等
@@ -44,7 +44,7 @@ https://www.soumu.go.jp/toukei_toukatsu/index/seido/syouhin/2index.htm
 - Linux shell (bash)
     - curl, sed, tr, nkf
 
-- Nodejs
+- Node.js
 
 Docker (特に[Play with Docker](https://labs.play-with-docker.com/)) を用いることで、ローカル環境における環境構築は不要である。
 
@@ -54,11 +54,13 @@ Docker (特に[Play with Docker](https://labs.play-with-docker.com/)) を用い�
 
 1. 情報の格納された JavaScript コード内の `env` という変数 (Object 型) の記載のみを抽出する。
 
-1. 上記に、`env` 変数から必要な情報を抽出して標準出力するためのスクリプト (src/additional.js) を連結したものをソーススクリプトとしてNodejsを実行する。
+1. 上記出力に、`env` 変数から必要な情報を抽出して標準出力するためのスクリプト (src/additional.js) を連結し、標準出力する。
+
+1. 上記出力をソーススクリプトとしてNodejsを実行する。
 
 1. 出力された情報を shell (bash) の sed や tr コマンドを用いて加工し (不要なスペースの削除やファイルレイアウトに従った加工等)、最終出力 (out/output.csv) を得る。
 
-1. Windows PC 上の MS Excel で文字化けせずに表示可能な csv ファイル (out/薬効分類.csv) を出力する。
+1. (おまけ) Windows PC 上の MS Excel で文字化けせずに表示可能な CSV ファイル (out/薬効分類.csv) を出力する。
 
 
 ## ファイルレイアウト
@@ -84,6 +86,8 @@ Docker (特に[Play with Docker](https://labs.play-with-docker.com/)) を用い�
 
 
 ### リポジトリの clone
+
+GitHub より リポジトリを clone する
 
 ```
 git clone https://github.com/kirino-k/therapeutic_category_of_drug.git

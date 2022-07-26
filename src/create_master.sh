@@ -3,7 +3,7 @@
 DIR_SRC=$(cd $(dirname $0); pwd)
 DIR_OUT=${DIR_SRC}/out
 
-echo 'コード1,分類1,コード2,分類2,薬効分類コード,薬効分類名,薬効分類番号,薬効分類細目名' > ${DIR_OUT}/output.csv
+echo '分類番号1,分類名1,分類番号2,分類名2,薬効分類コード,薬効分類名,分類番号4,分類名4' > ${DIR_OUT}/output.csv
 
 curl https://www.kegg.jp/brite/jp08301 |
   grep -A 11 'env' |
