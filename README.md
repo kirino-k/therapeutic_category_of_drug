@@ -7,24 +7,24 @@
 
 日本の医療用医薬品は、薬効分類ごとに分類されている。<br>
 
-ここでいう「薬効」とは、下記リンクにおける日本標準商品分類番号の中分類 87 の分類が該当する。<br>
-https://www.soumu.go.jp/toukei_toukatsu/index/seido/syouhin/2index.htm
+ここでいう「薬効分類」とは、[日本標準商品分類番号](https://www.soumu.go.jp/toukei_toukatsu/index/seido/syouhin/2index.htm)の中分類 87 の分類である。
 
 種々の医薬品標準マスターを取り扱う際に使用される YJ コードや薬価基準収載医薬品コードの上位 1 ~ 4 桁はこの分類番号と対応している。
 
-分類番号と分類名の対応表が存在すると大変ありがたいのだが、扱いやすい形式 (エクセルファイルやプレーンテキストファイル等) で格納・配布をしてくれている WEB サイトは残念ながら存在しない。
+医薬品標準マスターを扱う上でも、「薬効分類番号と分類名の対応表」が存在すると大変ありがたいのだが、扱いやすい形式 (エクセルファイルやプレーンテキストファイル等) として入手することは残念ながらできない[^注1]。
 
 そこで、以下のデータベースサイトの情報を取得・加工することで、薬効分類番号と分類名称の対応が記載された CSV ファイルを作成して、本リポジトリに格納することとする。<br>
 [KEGG: Kyoto Encyclopedia of Genes and Genomes](https://www.kegg.jp/kegg/)
 
+[^注1]: 実際には e-stat にデータが存在しました。[e-stat データからの対応表作成についてもリポジトリをつくりました]()。
 
 ## このリポジトリが提供するもの
 
-本リポジトリでは、以下の 2 つが取得可能である。
+本リポジトリでは、以下のものが取得可能である。
 
 1. 薬効分類番号 (薬効分類コード) と分類名の対応表 
 
-2. 1 を作成するために必要な環境構築方法と実行スクリプトのソースコード
+2. 1 を作成するために必要な環境構築方法とソースコード
 
 現在の薬効分類番号と分類名の対応表が必要な場合には、本リポジトリの[成果物ページ](https://github.com/kirino-k/therapeutic_category_of_drug/blob/main/src/out/output.csv)をコピー＆ペースト可能である。
 
@@ -50,7 +50,7 @@ Docker (特に[Play with Docker](https://labs.play-with-docker.com/)) を用い�
 
 ### 手順
 
-1. 情報源となる WEB ページよりソースとなる HTML ファイルを取得し、保存する (src/tmp/kegg_{yyyymmdd}.html)。なお、分類番号と分類名の対応を紐づける記載は script タグ内の JavaScript コードに存在する。
+1. 情報源となる WEB ページよりソースとなる HTML ファイルを取得し、保存する (src/tmp/kegg_yyyymmdd.html[^注2])。なお、分類番号と分類名の対応を紐づける記載は script タグ内の JavaScript コードに存在する。
 
 1. 情報の格納された JavaScript コード内の `env` という変数 (Object 型) の記載のみを抽出する。
 
@@ -60,7 +60,10 @@ Docker (特に[Play with Docker](https://labs.play-with-docker.com/)) を用い�
 
 1. 出力された情報を shell (bash) の sed と tr コマンドを用いて加工し (下記に定義したファイルレイアウトにするための加工と不要なスペースの削除)、出力 (src/out/output.csv) を得る。
 
-1. Windows PC 上の MS Excel で文字化けせずに表示可能な CSV ファイル (src/out/therapeutic_category_of_drug_{yyyymmdd}.csv) を出力する。
+1. Windows PC 上の MS Excel で文字化けせずに表示可能な CSV ファイル (src/out/therapeutic_category_of_drug_yyyymmdd.csv[^注3]) を出力する。
+
+[^注2]: yyyymmdd には実行日が 8 桁数字として入る。
+[^注3]: 同上。
 
 
 ## ファイルレイアウト
@@ -69,17 +72,16 @@ Docker (特に[Play with Docker](https://labs.play-with-docker.com/)) を用い�
 
 その他の分類番号や分類名に対応する既存の名称は存在しないため、番号に用いられる数字の桁数と対応する以下の列名 (変数名) を便宜的に用いた。
 
-
-| 列名              | 説明                                              |
-|-------------------|---------------------------------------------------|
-|分類番号1          | 「薬効分類コード」の上位 **1 桁**の数字           |
-|分類名1            | 「分類番号1」に対応する分類名                     |
-|分類番号2          | 「薬効分類コード」の上位 **2 桁**の数字           |
-|分類名2            | 「分類番号2」に対応する分類名                     |
-|**薬効分類コード** | 「薬効分類コード」として定義された **3 桁**の数字 |
-|**薬効分類名**     | 「薬効分類コード」に対応する分類名                |
-|分類番号4          | 「薬効分類番号」として定義された **4 桁**の数字   |
-|分類名4            | 「分類番号4」に対応する分類名                     |
+| 列名              | 説明                                                                                                             |
+|-------------------|------------------------------------------------------------------------------------------------------------------|
+|分類番号1          | 日本標準商品分類番号の「分類番号」から 87 を除いた番号の上位 **1 桁**の数字                                      |
+|分類名1            | 「分類番号1」に対応する分類名                                                                                    |
+|分類番号2          | 日本標準商品分類番号の「分類番号」から 87 を除いた番号の上位 **2 桁**の数字                                      |
+|分類名2            | 「分類番号2」に対応する分類名                                                                                    |
+|**薬効分類コード** | 日本標準商品分類番号の「分類番号」から 87 を除いた番号の上位 **3 桁**の数字 (「薬効分類コード」として定義される) |
+|**薬効分類名**     | 「薬効分類コード」に対応する分類名                                                                               |
+|分類番号4          | 日本標準商品分類番号の「分類番号」から 87 を除いた番号の上位 **4 桁**の数字                                      |
+|分類名4            | 「分類番号4」に対応する分類名                                                                                    |
 
 ## ソースコードの実行方法
 
@@ -97,7 +99,7 @@ git clone https://github.com/kirino-k/therapeutic_category_of_drug.git
 ローカルの shell でスクリプトを実行 (リポジトリの root ディレクトリ)
 
 ```
-./src/create_master.sh
+./src/create_table.sh
 ```
 
 ### Docker コンテナ上でスクリプトを実行する場合
@@ -105,7 +107,7 @@ git clone https://github.com/kirino-k/therapeutic_category_of_drug.git
 Docker コンテナの作成
 
 ```
-docker build . -t temporary_container:latest
+docker build . -t therapeutic_category_of_drug:latest
 ```
 
 Docker コンテナ上でスクリプトを実行 (リポジトリの root ディレクトリ)
@@ -116,12 +118,12 @@ docker run \
   -v $(pwd)/src:/home/node/src \
   --user node \
   --workdir /home/node/src \
-  temporary_container:latest \
-  ./create_master.sh    
+  therapeutic_category_of_drug:latest \
+  ./create_table.sh    
 ```
 
 コンテナ削除
 
 ```
-docker rmi temporary_container:latest
+docker rmi therapeutic_category_of_drug:latest
 ```
