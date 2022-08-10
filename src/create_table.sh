@@ -7,24 +7,17 @@ DIR_OUT=${DIR_SRC}/out
 if [ ! -e ${DIR_TMP} ]; then
   mkdir ${DIR_TMP}
 fi
-if [ -f ${DIR_TMP}/* ]; then
-  rm ${DIR_TMP}/*
-fi
 
 if [ ! -e ${DIR_OUT} ]; then
   mkdir ${DIR_OUT}
-fi
-if [ -f ${DIR_OUT}/* ]; then
-  rm ${DIR_OUT}/*
 fi
 
 PATH_TMP_HTML=${DIR_TMP}/kegg_$(date +%Y%m%d).html
 PATH_OUT_CSV=${DIR_OUT}/therapeutic_category_of_drug_$(date +%Y%m%d).csv
 
-echo '分類番号1,分類名1,分類番号2,分類名2,薬効分類コード,薬効分類名,分類番号4,分類名4' > ${DIR_OUT}/output.csv
-
 curl https://www.kegg.jp/brite/jp08301 > ${PATH_TMP_HTML}
 
+echo '分類番号1,分類名1,分類番号2,分類名2,薬効分類コード,薬効分類名,分類番号4,分類名4' > ${DIR_OUT}/output.csv
 cat ${PATH_TMP_HTML} |
   grep -A 11 'env' |
   cat - <(cat ${DIR_SRC}/additional.js) |

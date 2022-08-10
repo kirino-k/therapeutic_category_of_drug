@@ -11,12 +11,12 @@
 
 種々の医薬品標準マスターを取り扱う際に使用される YJ コードや薬価基準収載医薬品コードの上位 1 ~ 4 桁はこの分類番号と対応している。
 
-医薬品標準マスターを扱う上でも、「薬効分類番号と分類名の対応表」が存在すると大変ありがたいのだが、扱いやすい形式 (エクセルファイルやプレーンテキストファイル等) として入手することは残念ながらできない[^注1]。
+医薬品標準マスターを扱う上でも、「薬効分類番号と分類名の対応表」が存在すると大変ありがたいのだが、扱いやすい形式 (エクセルファイルやプレーンテキストファイル等) として入手することは残念ながらできない[^1]。
 
 そこで、以下のデータベースサイトの情報を取得・加工することで、薬効分類番号と分類名称の対応が記載された CSV ファイルを作成して、本リポジトリに格納することとする。<br>
 [KEGG: Kyoto Encyclopedia of Genes and Genomes](https://www.kegg.jp/kegg/)
 
-[^注1]: 実際には e-stat にデータが存在しました。[e-stat データからの対応表作成についてもリポジトリをつくりました]()。
+[^1]: 実際には e-stat にデータが存在しました。[e-stat データからの対応表作成についてもリポジトリをつくりました]()。
 
 ## このリポジトリが提供するもの
 
@@ -50,7 +50,7 @@ Docker (特に[Play with Docker](https://labs.play-with-docker.com/)) を用い�
 
 ### 手順
 
-1. 情報源となる WEB ページよりソースとなる HTML ファイルを取得し、保存する (src/tmp/kegg_yyyymmdd.html[^注2])。なお、分類番号と分類名の対応を紐づける記載は script タグ内の JavaScript コードに存在する。
+1. 情報源となる WEB ページよりソースとなる HTML ファイルを取得し、保存する (src/tmp/kegg_yyyymmdd.html[^2])。なお、分類番号と分類名の対応を紐づける記載は script タグ内の JavaScript コードに存在する。
 
 1. 情報の格納された JavaScript コード内の `env` という変数 (Object 型) の記載のみを抽出する。
 
@@ -60,7 +60,7 @@ Docker (特に[Play with Docker](https://labs.play-with-docker.com/)) を用い�
 
 1. 出力された情報を shell (bash) の sed と tr コマンドを用いて加工し (下記に定義したファイルレイアウトにするための加工と不要なスペースの削除)、出力 (src/out/output.csv) を得る。
 
-1. Windows PC 上の MS Excel で文字化けせずに表示可能な CSV ファイル (src/out/therapeutic_category_of_drug_yyyymmdd.csv[^注3]) を出力する。
+1. Windows PC 上の MS Excel で文字化けせずに表示可能な CSV ファイル (src/out/therapeutic_category_of_drug_yyyymmdd.csv[^3]) を出力する。
 
 [^注2]: yyyymmdd には実行日が 8 桁数字として入る。
 [^注3]: 同上。
